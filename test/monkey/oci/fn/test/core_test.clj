@@ -38,15 +38,27 @@
       (test-call k v))))
 
 (deftest application-endpoints
-  (test-endpoints {:list-applications {:compartment-id "test-compartment"}
+  (test-endpoints {:list-applications  {:compartment-id "test-compartment"}
                    :create-application {:compartment-id "new-compartment"
                                         :subnet-ids ["test-subnet"]
                                         :display-name "test-app"}
                    :update-application {:application-id "test-app"
                                         :config {"key" "value"}}
                    :delete-application {:application-id "test-app"}
-                   :get-application {:application-id "test-app"}}))
+                   :get-application    {:application-id "test-app"}}))
 
 (deftest function-endpoints
-  (test-endpoints {:get-function {:function-id "test-fn"}
-                   :list-functions {:application-id "test-app"}}))
+  (test-endpoints {:get-function    {:function-id "test-fn"}
+                   :list-functions  {:application-id "test-app"}
+                   :create-function {:application-id "test-app"
+                                     :display-name "test-fn"
+                                     :image "test:latest"
+                                     :memory-in-m-bs 100}
+                   :update-function {:function-id "test-fn"
+                                     :display-name "test-fn"
+                                     :image "test:latest"
+                                     :memory-in-m-bs 100}
+                   :delete-function {:function-id "test-fn"}
+                   :invoke-function {:function-id "test-fn"
+                                     :fn-invoke-type "detached"
+                                     :body "test body"}}))

@@ -51,6 +51,15 @@
     :path-schema {:application-id s/Str}
     :consumes json}])
 
+(def update-fn-details
+  {:displayName s/Str
+   :memoryInMBs s/Int
+   (s/optional-key :config) s/Any
+   (s/optional-key :definedTags) s/Any
+   (s/optional-key :freeformTags) s/Any
+   (s/optional-key :image) s/Str
+   (s/optional-key :timeoutInSeconds) s/Int})
+
 (def function-routes
   [{:route-name :list-functions
     :method :get
@@ -64,6 +73,37 @@
     :method :get
     :path-parts ["/functions/" :function-id]
     :path-schema {:function-id s/Str}
+    :produces json}
+
+   {:route-name :create-function
+    :method :post
+    :path-parts ["/functions"]
+    :body-schema {:fn (assoc update-fn-details
+                             :applicationId s/Str)}
+    :consumes json
+    :produces json}
+   
+   {:route-name :update-function
+    :method :put
+    :path-parts ["/functions/" :function-id]
+    :path-schema {:function-id s/Str}
+    :body-schema {:fn update-fn-details}
+    :consumes json
+    :produces json}
+
+   {:route-name :delete-function
+    :method :delete
+    :path-parts ["/functions/" :function-id]
+    :path-schema {:function-id s/Str}
+    :consumes json}
+
+   {:route-name :invoke-function
+    :method :post
+    :path-parts ["/functions/" :function-id "/actions/invoke"]
+    :path-schema {:function-id s/Str}
+    :body-schema {:body s/Str}
+    :header-schema {(s/optional-key :fn-invoke-type) s/Str
+                    (s/optional-key :fn-intent) s/Str}
     :produces json}])
 
 (def routes (concat application-routes
