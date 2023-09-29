@@ -24,9 +24,9 @@
     :body-schema {:app {:compartmentId s/Str
                         :displayName s/Str
                         :subnetIds [s/Str]
-                        (s/optional-key :config) {s/Str s/Str}
-                        (s/optional-key :definedTags) {s/Str s/Any}
-                        (s/optional-key :freeformTags) {s/Str s/Str}
+                        (s/optional-key :config) s/Any
+                        (s/optional-key :definedTags) s/Any
+                        (s/optional-key :freeformTags) s/Any
                         (s/optional-key :shape) s/Str}}
     :consumes json
     :produces json}
@@ -35,12 +35,18 @@
     :method :put
     :path-parts ["/applications/" :application-id]
     :path-schema {:application-id s/Str}
-    :body-schema {:app {:config {s/Str s/Str}}}
+    :body-schema {:app {:config s/Any}}
     :consumes json
     :produces json}
 
    {:route-name :delete-application
     :method :delete
+    :path-parts ["/applications/" :application-id]
+    :path-schema {:application-id s/Str}
+    :consumes json}
+
+   {:route-name :get-application
+    :method :get
     :path-parts ["/applications/" :application-id]
     :path-schema {:application-id s/Str}
     :consumes json}])

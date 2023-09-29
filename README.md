@@ -47,6 +47,11 @@ The functions return the raw response from the API, where the body is parsed fro
 This is because sometimes you'll need the headers, e.g. for pagination.  Mostly you'll
 just need the `:body` and `:status`.
 
+### Available Endpoints
+
+The endpoints are auto-generated from the routes declared in the [core namespace](src/monkey/oci/fn/core.clj)
+and they reflect those declared in the [Fn api documentation](https://docs.oracle.com/en-us/iaas/api/#/en/functions/20181201/).
+
 ## License
 
 MIT license, see [LICENSE](LICENSE).

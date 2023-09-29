@@ -46,3 +46,10 @@
                   (mt/respond-with-constant {:delete-application {:body "{}"}})
                   (sut/delete-application {:application-id "test-app"})
                   (deref))))))
+
+(deftest get-application
+  (testing "invokes `get-application` endpoint"
+    (is (map? (-> test-ctx
+                  (mt/respond-with-constant {:get-application {:body "{}"}})
+                  (sut/get-application {:application-id "test-app"})
+                  (deref))))))
