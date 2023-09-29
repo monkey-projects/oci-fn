@@ -51,7 +51,23 @@
     :path-schema {:application-id s/Str}
     :consumes json}])
 
-(def routes (concat application-routes))
+(def function-routes
+  [{:route-name :list-functions
+    :method :get
+    :path-parts ["/functions"]
+    :query-schema {:applicationId s/Str
+                   (s/optional-key :displayName) s/Str
+                   (s/optional-key :id) s/Str}
+    :produces json}
+
+   {:route-name :get-function
+    :method :get
+    :path-parts ["/functions/" :function-id]
+    :path-schema {:function-id s/Str}
+    :produces json}])
+
+(def routes (concat application-routes
+                    function-routes))
 
 (def host (comp (partial format "https://functions.%s.oraclecloud.com/20181201") :region))
 
