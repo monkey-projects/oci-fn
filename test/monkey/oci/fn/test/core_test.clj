@@ -20,10 +20,12 @@
 
 (defn- test-call
   ([f route opts]
-   (is (map? (-> test-ctx
-                 (mt/respond-with-constant {route {:body "[]"}})
-                 (f opts)
-                 (deref)))))
+   (let [r (-> test-ctx
+               (mt/respond-with-constant {route {:body "[]" :status 200}})
+               (f opts)
+               (deref))]
+     (is (map? r))
+     (is (= 200 (:status r)))))
   ([route opts]
    (let [f (some->> route symbol (ns-resolve 'monkey.oci.fn.core) var-get)]
      (is (fn? f) (str "no binding found for " route))
@@ -60,5 +62,5 @@
                                      :memory-in-m-bs 100}
                    :delete-function {:function-id "test-fn"}
                    :invoke-function {:function-id "test-fn"
-                                     :fn-invoke-type "detached"
+                                     :fn-invoke-type "wrong"
                                      :body "test body"}}))

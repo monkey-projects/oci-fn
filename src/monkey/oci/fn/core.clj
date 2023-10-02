@@ -102,7 +102,7 @@
     :path-parts ["/functions/" :function-id "/actions/invoke"]
     :path-schema {:function-id s/Str}
     :body-schema {:body s/Str}
-    :header-schema {(s/optional-key :fn-invoke-type) s/Str
+    :header-schema {(s/optional-key :fn-invoke-type) (s/enum :sync :detached)
                     (s/optional-key :fn-intent) s/Str}
     :produces json}])
 
