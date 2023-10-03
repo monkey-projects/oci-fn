@@ -4,19 +4,21 @@
   (:require [martian.core :as martian]
             [monkey.oci.common
              [martian :as cm]
+             [pagination :refer [paged-route]]
              [utils :as u]]
             [schema.core :as s]))
 
 (def json #{"application/json"})
 
 (def application-routes
-  [{:route-name :list-applications
-    :method :get
-    :path-parts ["/applications"]
-    :query-schema {:compartmentId s/Str
-                   (s/optional-key :displayName) s/Str
-                   (s/optional-key :id) s/Str}
-    :produces json}
+  [(paged-route
+    {:route-name :list-applications
+     :method :get
+     :path-parts ["/applications"]
+     :query-schema {:compartmentId s/Str
+                    (s/optional-key :displayName) s/Str
+                    (s/optional-key :id) s/Str}
+     :produces json})
 
    {:route-name :create-application
     :method :post
@@ -61,13 +63,14 @@
    (s/optional-key :timeoutInSeconds) s/Int})
 
 (def function-routes
-  [{:route-name :list-functions
-    :method :get
-    :path-parts ["/functions"]
-    :query-schema {:applicationId s/Str
-                   (s/optional-key :displayName) s/Str
-                   (s/optional-key :id) s/Str}
-    :produces json}
+  [(paged-route
+    {:route-name :list-functions
+     :method :get
+     :path-parts ["/functions"]
+     :query-schema {:applicationId s/Str
+                    (s/optional-key :displayName) s/Str
+                    (s/optional-key :id) s/Str}
+     :produces json})
 
    {:route-name :get-function
     :method :get
